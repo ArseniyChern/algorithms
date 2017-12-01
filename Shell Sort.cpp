@@ -2,6 +2,13 @@
 
 using namespace std;
 
+
+/**
+Complexity 
+
+
+*/
+
 void display(int* arr,int n) {
    int i;
    printf("[");
@@ -15,7 +22,7 @@ void display(int* arr,int n) {
 }
 
 int* shell(int *arr, int n) {
-   int gap = n/2;
+  int gap = n/2;
       
   while(gap > 0) {
           
