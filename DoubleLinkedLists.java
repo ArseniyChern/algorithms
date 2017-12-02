@@ -1,7 +1,14 @@
+
+
+/**
+
+Double linked list implementation
+
+*/
 public class DoubleLinkedLists {
 	public static void main(String[] args) {
  		DoubleList t = new DoubleList();
- 		t.add(6);
+ 		t.add(6,0);
  		t.add(7,0);
  		t.add(8,1);
 		t.add(9,2);
@@ -34,7 +41,12 @@ class DoubleList {
 	}
 
 	public void add(int data, int position) {
-		if(position > 0) {
+      if(first == null) {
+        first = new dNode();
+        first.data = data;
+        return;
+      }
+		if(position < 0) {
 			System.out.println("position out of range");
 			return;
 		}
