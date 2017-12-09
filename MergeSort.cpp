@@ -14,9 +14,9 @@ void display(int* arr,int n) {
 int* merge(int arr[], int l, int m, int r)
 {
 
-	//l = 0 m = 4 r = 9 (first iter)
+	//l = 0 m = 4 r = 9 (last call)
 
-	//n1 = 5 n2 = 5 (first iter) = length of arrays
+	//n1 = 5 n2 = 5 (last call) = length of arrays
     int n1 = m - l + 1;
     int n2 =  r - m;
  
@@ -33,6 +33,7 @@ int* merge(int arr[], int l, int m, int r)
     int i = 0; // Initial index of first subarray
     int j = 0; // Initial index of second subarray
     int k = l; // Initial index of merged subarray
+
     while (i < n1 && j < n2)
     {
         if (L[i] <= R[j])
