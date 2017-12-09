@@ -13,22 +13,26 @@ void display(int* arr,int n) {
 
 int* merge(int arr[], int l, int m, int r)
 {
-    int i, j, k;
+
+	//l = 0 m = 4 r = 9 (first iter)
+
+	//n1 = 5 n2 = 5 (first iter) = length of arrays
     int n1 = m - l + 1;
     int n2 =  r - m;
  
     int L[n1], R[n2];
  
-    for (i = 0; i < n1; i++)
+ 	//Splitting into 2 separate arrays, left and right
+    for (int i = 0; i < n1; i++)
         L[i] = arr[l + i];
-    for (j = 0; j < n2; j++)
+    for (int j = 0; j < n2; j++)
         R[j] = arr[m + 1+ j];
  
     // Merge the temp arrays back into arr[l..r]
 
-    i = 0; // Initial index of first subarray
-    j = 0; // Initial index of second subarray
-    k = l; // Initial index of merged subarray
+    int i = 0; // Initial index of first subarray
+    int j = 0; // Initial index of second subarray
+    int k = l; // Initial index of merged subarray
     while (i < n1 && j < n2)
     {
         if (L[i] <= R[j])
@@ -66,13 +70,13 @@ int* merge(int arr[], int l, int m, int r)
 // l is for left index and r is right index of the sub-array of arr to be sorted 
 int* mergeSort(int arr[], int l, int r)
 {
+
     if (l < r)
     {
-        // Same as (l+r)/2, but avoids overflow for
-        // large l and h
-        int m = l+(r-l)/2;
+        
+        int m = (l+r)/2;
  
-        // Sort first and second halves
+        //l = 0, m = 4 r = 9 (1st iter)
         mergeSort(arr, l, m);
         mergeSort(arr, m+1, r);
  
