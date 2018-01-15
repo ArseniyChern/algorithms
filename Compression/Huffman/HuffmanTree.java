@@ -10,6 +10,8 @@ import java.util.Queue;
 import java.util.Set;
 
 public class HuffmanTree {
+	HuffmanNode root; 
+	
 	static class HuffmanNode {
 		char c;
 		int frequency;
@@ -45,13 +47,15 @@ public class HuffmanTree {
 
 	}
 
-	public void compress(String text) {
+	public BitSet compress(String text) {
 		// First we get the frequency of each character
 		Map<Character, Integer> frequency = getFrequency(text);
 
 		// then we build the tree and get the root
 		HuffmanNode root = buildTree((HashMap<Character, Integer>) frequency);
-
+		
+		this.root = root;
+		
 		// Then we get bit code representation for each corresponding character
 		Map<Character, String> charCodes = generateCodes(frequency.keySet(), root);
 
@@ -64,6 +68,7 @@ public class HuffmanTree {
 		for (Entry<Character, String> entry : charCodes.entrySet()) {
 			System.out.println(entry.getKey() + " : "+entry.getValue());
 		}
+		
 		System.out.println("\nEncoded Message: ");
 		for(int i = 0; i < bits.length();i++) {
 			if(bits.get(i)) {
@@ -73,7 +78,39 @@ public class HuffmanTree {
 			}
 		}
 		
+		System.out.println();
+		
+		System.out.println("Total encoded bits: "+bits.length()+", Total unencoded bits: "+text.length()*8);
+		System.out.println("We saved "+ ((text.length()*8)-(bits.length())) +" bits!");
+		System.out.println("\nDecoded Message: "+decompress(bits));
+		return bits;
+		
 
+	}
+	
+	public String decompress(BitSet bits) {
+		String originalText = decompress(bits, "",0,this.root);
+		
+		return originalText;
+		
+	}
+	
+	private String decompress(BitSet bits,String originalString,int currentBitLocation, HuffmanNode node) {
+		if(bits.length()+1 == currentBitLocation) {
+			return originalString;
+		}
+		if(node.c == '\0') {
+			if(bits.get(currentBitLocation)) {
+				originalString = decompress(bits, originalString, currentBitLocation+1, node.right);
+			} else {
+				originalString = decompress(bits, originalString, currentBitLocation+1, node.left);
+			}
+		} else {
+				originalString += node.c;
+				originalString = decompress(bits, originalString, currentBitLocation, this.root);
+		}
+		return originalString;
+		
 	}
 
 	private BitSet serializeMessage(String encodedMessage) {
@@ -166,7 +203,7 @@ public class HuffmanTree {
 
 	public static void main(String[] args) {
 		HuffmanTree e = new HuffmanTree();
-		e.compress("How is it that i do this");
+		e.compress("How, or rather why is it that i do this");
 
 	}
 
